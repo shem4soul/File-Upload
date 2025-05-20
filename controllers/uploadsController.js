@@ -8,7 +8,7 @@ const uploadProductImage = async (req, res) => {
   const imagePath = path.join(
     __dirname,
     "../public/uploads",
-    +`${productImage.name}`
+    `${productImage.name}`
   );
 
   await productImage.mv(imagePath)
