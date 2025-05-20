@@ -1,8 +1,8 @@
 const path = require("path");
-const fs = require("fs");
+
 const { StatusCodes } = require("http-status-codes");
 const CustomError = require("../errors");
-
+const fs = require("fs");
 
 const cloudinary = require("cloudinary").v2;
 
@@ -76,8 +76,14 @@ const uploadProductImage = async (req, res) => {
       { folder: "file-upload" } // override the folder here
     );
 
-    // 3) Cleanup temp file
-    // fs.unlinkSync(productImage.tempFilePath);
+    //3.  Cleanup temp file
+    fs.unlinkSync(req.files.image.tempFilePath);
+    return res.status(StatusCodes.OK).json({    
+      image: {
+        src: result.secure_url,
+        public_id: result.public_id,
+      },
+    });
 
     // 4) Respond
     return res.status(StatusCodes.OK).json({
