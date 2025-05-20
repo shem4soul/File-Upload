@@ -5,7 +5,12 @@ const express = require('express');
 const app = express();
 
 const fileUpload = require('express-fileupload');
-
+const cloudinary = require('cloudinary').v2;
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 // database
 const connectDB = require('./db/connect');
@@ -20,7 +25,7 @@ const errorHandlerMiddleware = require('./middleware/error-handler');
 
 app.use(express.static('./public'));
 app.use(express.json());
-app.use(fileUpload());
+app.use(fileUpload({useTempFiles: true, tempFileDir: './tmp'}));
 
 
 
