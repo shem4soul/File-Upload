@@ -12,7 +12,10 @@ const uploadProductImage = async (req, res) => {
   );
 
   await productImage.mv(imagePath)
-  res.send('upload product image');
+  return res
+    .status(StatusCodes.OK)
+    .json({ image: { src: `/uploads/${productImage.name}` } })
+   
 }
 module.exports = {
   uploadProductImage,
